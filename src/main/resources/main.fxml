@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mattihew.Main">
    <center>
        <VBox fx:id="issueContainer" prefHeight="200.0" prefWidth="100.0" />
@@ -58,7 +57,7 @@
             <ToolBar>
                <items>
                   <Label text="Task 1" visible="false" />
-                  <ProgressBar prefWidth="200.0" progress="0.0" visible="false" />
+                  <ProgressBar progress="0.0" visible="false" />
                </items>
             </ToolBar>
          </children>

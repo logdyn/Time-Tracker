@@ -1,5 +1,6 @@
 package com.mattihew;
 
+import com.mattihew.model.Issue;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,11 +34,8 @@ public class Main extends Application
 
     public void initialize() throws IOException
     {
-        Node issue = FXMLLoader.load(ClassLoader.getSystemResource("issue.fxml"));
-        Node issue2 = FXMLLoader.load(ClassLoader.getSystemResource("issue.fxml"));
-        Node issue3 = FXMLLoader.load(ClassLoader.getSystemResource("issue.fxml"));
-        issueContainer.getChildren().add(issue);
-        issueContainer.getChildren().add(issue2);
-        issueContainer.getChildren().add(issue3);
+        issueContainer.getChildren().add(new Issue("test").getRoot());
+        issueContainer.getChildren().add(new Issue("test2").getRoot());
+        issueContainer.getChildren().add(new Issue("test3").getRoot());
     }
 }

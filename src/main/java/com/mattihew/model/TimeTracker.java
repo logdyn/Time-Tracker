@@ -1,23 +1,21 @@
 package com.mattihew.model;
 
-public class IssueTimeTracker
+public class TimeTracker
 {
-    private final String issue;
-    private final long firstStartTime;
-    private long currentStartTime;
+    private long firstStartTime;
     private long duration;
+    private long currentStartTime;
 
-    public IssueTimeTracker(final String issue, final long startTime)
+    public TimeTracker()
     {
-        this.issue = issue;
-        this.firstStartTime = startTime;
-        this.currentStartTime = -1;
-        this.duration = 0;
+        this(-1, 0);
     }
 
-    public String getIssue()
+    public TimeTracker(final long firstStartTime, final long duration)
     {
-        return this.issue;
+        this.firstStartTime = firstStartTime;
+        this.duration = duration;
+        this.currentStartTime = -1;
     }
 
     public long getFirstStartTime()
@@ -27,7 +25,12 @@ public class IssueTimeTracker
 
     public long startTimer()
     {
-        return this.currentStartTime = System.currentTimeMillis();
+        this.currentStartTime = System.currentTimeMillis();
+        if (this.firstStartTime == -1)
+        {
+            this.firstStartTime = this.currentStartTime;
+        }
+        return this.currentStartTime;
     }
 
     public boolean isStopped()
@@ -44,7 +47,7 @@ public class IssueTimeTracker
 
     private long getCurrentDuration()
     {
-        return this.isStopped() ? 0L : (System.currentTimeMillis() - this.currentStartTime);
+        return this.isStopped() ? 0 : (System.currentTimeMillis() - this.currentStartTime);
     }
 
     public long getDuration()

@@ -1,0 +1,11 @@
+GridPane {
+    -fx-background-color: pink;
+}
+
+GridPane:hover {
+    -fx-background-color: lightyellow;
+}
+
+GridPane.active {
+    -fx-background-color: lightgreen;
+}

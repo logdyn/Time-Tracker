@@ -14,8 +14,7 @@ import java.io.IOException;
 
 public class Main extends Application
 {
-    @FXML
-    private VBox issueContainer;
+    @FXML private VBox issueContainer;
 
     public static void main(final String[] args)
     {
@@ -32,7 +31,8 @@ public class Main extends Application
         primaryStage.show();
     }
 
-    public void initialize() throws IOException
+    @FXML
+    private void initialize() throws IOException
     {
         issueContainer.getChildren().add(new Issue("test").getRoot());
         issueContainer.getChildren().add(new Issue("test2").getRoot());

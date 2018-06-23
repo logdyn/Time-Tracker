@@ -2,7 +2,6 @@ package com.mattihew.model;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
@@ -12,14 +11,11 @@ import java.util.List;
 
 public class Issue
 {
-    @FXML
-    private Hyperlink lblIssue;
+    @FXML private Hyperlink lblIssue;
 
-    @FXML
-    private Region root;
+    @FXML private Region root;
 
-    private TimeTracker timeTracker;
-
+    private final TimeTracker timeTracker;
 
     private final String issue;
 
@@ -32,19 +28,20 @@ public class Issue
         this.root.getStylesheets().add("issue.css");
     }
 
-    public void initialize()
+    @FXML
+    private void initialize()
     {
         this.lblIssue.setText(this.issue);
         this.lblIssue.prefWidthProperty().bind(this.root.widthProperty().divide(2));
     }
 
-    public Node getRoot()
+    public Region getRoot()
     {
         return this.root;
     }
 
     @FXML
-    public void click(MouseEvent e)
+    public void click(final MouseEvent event)
     {
         final List<String> classes = this.root.getStyleClass();
         final String styleClass = "active";

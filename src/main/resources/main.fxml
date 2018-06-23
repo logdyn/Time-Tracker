@@ -1,34 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mattihew.Main">
-    <MenuBar>
-        <menus>
-            <Menu mnemonicParsing="false" text="File">
-                <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Edit">
-                <items>
-                    <MenuItem fx:id="BtnUndo" disable="true" mnemonicParsing="false" text="Undo" />
-                    <MenuItem fx:id="BtnRedo" disable="true" mnemonicParsing="false" text="Redo" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Add" />
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-                <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                </items>
-            </Menu>
-        </menus>
-    </MenuBar>
-    <VBox fx:id="issueContainer" prefHeight="200.0" prefWidth="100.0" />
-</VBox>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mattihew.Main">
+   <center>
+       <VBox fx:id="issueContainer" prefHeight="200.0" prefWidth="100.0" />
+   </center>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+             <MenuBar>
+                 <menus>
+                     <Menu mnemonicParsing="false" text="File">
+                         <items>
+                             <MenuItem mnemonicParsing="false" text="Close" />
+                         </items>
+                     </Menu>
+                     <Menu mnemonicParsing="false" text="Edit">
+                         <items>
+                             <MenuItem fx:id="BtnUndo" disable="true" mnemonicParsing="false" text="Undo" />
+                             <MenuItem fx:id="BtnRedo" disable="true" mnemonicParsing="false" text="Redo" />
+                             <SeparatorMenuItem mnemonicParsing="false" />
+                             <MenuItem mnemonicParsing="false" text="Add" />
+                             <MenuItem mnemonicParsing="false" text="Delete" />
+                         </items>
+                     </Menu>
+                     <Menu mnemonicParsing="false" text="Help">
+                         <items>
+                             <MenuItem mnemonicParsing="false" text="About" />
+                         </items>
+                     </Menu>
+                 </menus>
+             </MenuBar>
+            <ToolBar>
+              <items>
+                <Button mnemonicParsing="false" text="+" />
+              </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Separator prefWidth="200.0" />
+            <ToolBar>
+               <items>
+                  <Label text="Task 1" visible="false" />
+                  <ProgressBar prefWidth="200.0" progress="0.0" visible="false" />
+               </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

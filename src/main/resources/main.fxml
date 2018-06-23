@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.*?><?import javafx.scene.layout.BorderPane?>
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mattihew.Main">
- <top>
-    <MenuBar BorderPane.alignment="CENTER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Close" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Delete" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About" />
-          </items>
-        </Menu>
-      </menus>
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mattihew.Main">
+    <MenuBar>
+        <menus>
+            <Menu mnemonicParsing="false" text="File">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+                <items>
+                    <MenuItem fx:id="BtnUndo" disable="true" mnemonicParsing="false" text="Undo" />
+                    <MenuItem fx:id="BtnRedo" disable="true" mnemonicParsing="false" text="Redo" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" text="Add" />
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                </items>
+            </Menu>
+        </menus>
     </MenuBar>
- </top>
-</BorderPane>
-
+    <VBox fx:id="issueContainer" prefHeight="200.0" prefWidth="100.0" />
+</VBox>

@@ -25,6 +25,7 @@ public class TimeTracker
 
     public long startTimer()
     {
+        this.duration += this.getCurrentDuration();
         this.currentStartTime = System.currentTimeMillis();
         if (this.firstStartTime == -1)
         {

@@ -1,12 +1,13 @@
 package com.mattihew;
 
 import com.mattihew.model.Issue;
+import com.mattihew.model.IssueList;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -15,6 +16,8 @@ import java.io.IOException;
 public class Main extends Application
 {
     @FXML private VBox issueContainer;
+
+    private IssueList issueList;
 
     public static void main(final String[] args)
     {
@@ -34,8 +37,28 @@ public class Main extends Application
     @FXML
     private void initialize() throws IOException
     {
-        issueContainer.getChildren().add(new Issue("test").getRoot());
-        issueContainer.getChildren().add(new Issue("test2").getRoot());
-        issueContainer.getChildren().add(new Issue("test3").getRoot());
+        this.issueContainer.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> this.issueClicked(e));
+        this.issueList = new IssueList(issueContainer.getChildren());
+        this.issueList.add(new Issue("test"));
+        this.issueList.add(new Issue("test-2"));
+        this.issueList.add(new Issue("test-3"));
+    }
+
+    @Override
+    public void stop()
+    {
+        ExecutionUtils.shutdown();
+    }
+
+    @FXML
+    private void issueClicked(final MouseEvent e)
+    {
+        this.issueList.clearSelection();
+    }
+
+    @FXML
+    private void addNewIssue() throws IOException
+    {
+        this.issueList.add(new Issue("new"));
     }
 }

@@ -1,19 +1,28 @@
 package com.mattihew.model;
 
+import com.mattihew.ExecutionUtils;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
 import java.io.IOException;
-import java.util.List;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.Future;
 
 public class Issue
 {
+    private static Future<?> timerFuture;
+
     @FXML private Hyperlink lblIssue;
 
     @FXML private Region root;
+
+    @FXML private Label lblTime;
 
     private final TimeTracker timeTracker;
 
@@ -40,20 +49,32 @@ public class Issue
         return this.root;
     }
 
+    public void select()
+    {
+        this.root.getStyleClass().add("active");
+        this.timeTracker.startTimer();
+
+        if (Issue.timerFuture != null)
+        {
+            Issue.timerFuture.cancel(true);
+        }
+
+        Issue.timerFuture = ExecutionUtils.scheduleAtFixedRate(() -> Platform.runLater(() -> {
+            LocalTime date = LocalTime.ofSecondOfDay(Issue.this.timeTracker.getDuration()/1000);
+            String text = DateTimeFormatter.ISO_LOCAL_TIME.format(date);
+            Issue.this.lblTime.setText(text);
+        }), 1000);
+    }
+
+    public void deselect()
+    {
+        this.root.getStyleClass().remove("active");
+        this.timeTracker.stopTimer();
+    }
+
     @FXML
     public void click(final MouseEvent event)
     {
-        final List<String> classes = this.root.getStyleClass();
-        final String styleClass = "active";
-
-        if (classes.contains(styleClass))
-        {
-            classes.remove(styleClass);
-        }
-        else
-        {
-            classes.add(styleClass);
-        }
-
+        this.select();
     }
 }

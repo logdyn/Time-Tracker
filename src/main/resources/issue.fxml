@@ -28,7 +28,7 @@
       </StackPane>
       <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
          <children>
-            <Label fx:id="lblTime" text="0:00" StackPane.alignment="CENTER">
+            <Label fx:id="lblTime" text="00:00:00" StackPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>

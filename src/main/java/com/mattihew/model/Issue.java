@@ -1,23 +1,22 @@
 package com.mattihew.model;
 
-import com.mattihew.ExecutionUtils;
-import javafx.application.Platform;
+import com.mattihew.utils.NonNullObservableValue;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.Future;
 
 public class Issue
 {
-    private static Future<?> timerFuture;
-
     @FXML private Hyperlink lblIssue;
 
     @FXML private Region root;
@@ -28,6 +27,8 @@ public class Issue
 
     private final String issue;
 
+    private final ScheduledService<String> service;
+
     public Issue(final String issue) throws IOException
     {
         this.issue = issue;
@@ -35,6 +36,24 @@ public class Issue
 
         FXMLLoader.load(ClassLoader.getSystemResource("issue.fxml"), null, null, c -> this);
         this.root.getStylesheets().add("issue.css");
+        this.service = new ScheduledService<String>()
+        {
+            @Override
+            protected Task<String> createTask()
+            {
+                return new Task<String>()
+                {
+                    @Override
+                    protected String call()
+                    {
+                        LocalTime date = LocalTime.ofSecondOfDay(Issue.this.timeTracker.getDuration()/1000);
+                        return DateTimeFormatter.ISO_LOCAL_TIME.format(date);
+                    }
+                };
+            }
+        };
+        this.service.setPeriod(Duration.millis(1000));
+        this.lblTime.textProperty().bind(new NonNullObservableValue<>(service.lastValueProperty(),"00:00:00"));
     }
 
     @FXML
@@ -53,23 +72,14 @@ public class Issue
     {
         this.root.getStyleClass().add("active");
         this.timeTracker.startTimer();
-
-        if (Issue.timerFuture != null)
-        {
-            Issue.timerFuture.cancel(true);
-        }
-
-        Issue.timerFuture = ExecutionUtils.scheduleAtFixedRate(() -> Platform.runLater(() -> {
-            LocalTime date = LocalTime.ofSecondOfDay(Issue.this.timeTracker.getDuration()/1000);
-            String text = DateTimeFormatter.ISO_LOCAL_TIME.format(date);
-            Issue.this.lblTime.setText(text);
-        }), 1000);
+        this.service.restart();
     }
 
     public void deselect()
     {
         this.root.getStyleClass().remove("active");
         this.timeTracker.stopTimer();
+        this.service.cancel();
     }
 
     @FXML

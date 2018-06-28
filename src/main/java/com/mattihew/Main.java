@@ -44,12 +44,6 @@ public class Main extends Application
         this.issueList.add(new Issue("test-3"));
     }
 
-    @Override
-    public void stop()
-    {
-        ExecutionUtils.shutdown();
-    }
-
     @FXML
     private void issueClicked(final MouseEvent e)
     {

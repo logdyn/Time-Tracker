@@ -9,7 +9,7 @@ import java.util.List;
 
 public class IssueList
 {
-    private final List<Issue> issues = new ArrayList<>();
+    private final List<IssueElement> issues = new ArrayList<>();
     private final ObservableList<Node> nodes;
 
     private int selectedIndex = -1;
@@ -19,13 +19,13 @@ public class IssueList
         this.nodes = nodes;
     }
 
-    public boolean add(final Issue issue)
+    public boolean add(final IssueElement issue)
     {
-        this.nodes.add(issue.getRoot());
-        return this.issues.add(issue);
+        return this.nodes.add(issue.getRoot())
+        && this.issues.add(issue);
     }
 
-    public List<Issue> getIssues()
+    public List<IssueElement> getIssues()
     {
         return Collections.unmodifiableList(this.issues);
     }
@@ -33,7 +33,7 @@ public class IssueList
     public void clearSelection()
     {
         selectedIndex = -1;
-        for (final Issue issue : this.issues)
+        for (final IssueElement issue : this.issues)
         {
             issue.deselect();
         }

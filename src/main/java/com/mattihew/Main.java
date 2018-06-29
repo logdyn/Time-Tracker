@@ -1,6 +1,6 @@
 package com.mattihew;
 
-import com.mattihew.model.Issue;
+import com.mattihew.model.IssueElement;
 import com.mattihew.model.IssueList;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -39,9 +39,6 @@ public class Main extends Application
     {
         this.issueContainer.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> this.issueClicked(e));
         this.issueList = new IssueList(issueContainer.getChildren());
-        this.issueList.add(new Issue("test"));
-        this.issueList.add(new Issue("test-2"));
-        this.issueList.add(new Issue("test-3"));
     }
 
     @FXML
@@ -53,6 +50,6 @@ public class Main extends Application
     @FXML
     private void addNewIssue() throws IOException
     {
-        this.issueList.add(new Issue("new"));
+        this.issueList.add(new IssueElement("new"));
     }
 }

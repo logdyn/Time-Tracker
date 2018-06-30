@@ -21,7 +21,7 @@
     <center>
         <ScrollPane fitToHeight="true" fitToWidth="true">
             <content>
-                <GridPane fx:id="issueContainer" gridLinesVisible="true" prefHeight="200.0">
+                <GridPane fx:id="issueContainer" styleClass="issueContainer" gridLinesVisible="true" prefHeight="200.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="ALWAYS" minWidth="75.0" />
                         <ColumnConstraints hgrow="ALWAYS" maxWidth="150" minWidth="150.0" prefWidth="150.0" />

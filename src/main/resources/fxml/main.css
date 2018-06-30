@@ -1,13 +1,13 @@
-GridPane StackPane {
+.issueContainer > StackPane {
     -fx-background-color: pink;
     -fx-cursor: hand;
 }
 
-GridPane StackPane.hover {
+.issueContainer > StackPane.hover {
     -fx-background-color: lightyellow;
 }
 
-GridPane StackPane.active {
+.issueContainer > StackPane.active {
     -fx-background-color: lightgreen;
     -fx-cursor: default;
 }

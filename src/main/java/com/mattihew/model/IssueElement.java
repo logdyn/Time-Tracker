@@ -5,9 +5,9 @@ import com.mattihew.utils.TimerService;
 import javafx.concurrent.ScheduledService;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -20,14 +20,18 @@ import java.util.List;
 
 public class IssueElement
 {
-    private Labeled lblIssue;
+    //JavaFX elements
+    private final Labeled lblIssue;
 
-    private StackPane stkIssue;
+    private final StackPane stkIssue;
 
-    private Label lblTime;
+    private final Label lblTime;
 
-    private StackPane stkTime;
+    private final StackPane stkTime;
 
+    private final MenuItem mnuRemove;
+
+    //Other fields
     private final TimeTracker timeTracker;
 
     private final String name;
@@ -46,6 +50,9 @@ public class IssueElement
         this.name = issue;
         this.url = url;
 
+        this.mnuRemove = new MenuItem("Remove", new Label("🗑"));
+        final ContextMenu contextMenu = new ContextMenu(this.mnuRemove);
+
         if (url != null && !url.toString().isEmpty())
         {
             this.lblIssue = new Hyperlink(name);
@@ -61,6 +68,7 @@ public class IssueElement
         this.stkIssue = new StackPane(this.lblIssue);
         this.stkIssue.addEventHandler(MouseEvent.MOUSE_ENTERED, this::hover);
         this.stkIssue.addEventHandler(MouseEvent.MOUSE_EXITED, this::hover);
+        this.stkIssue.setOnContextMenuRequested(e -> contextMenu.show(this.stkIssue, e.getScreenX(), e.getScreenY()));
 
         this.timeTracker = new TimeTracker();
         this.service = new TimerService(this.timeTracker);
@@ -73,6 +81,7 @@ public class IssueElement
         this.stkTime = new StackPane(this.lblTime);
         this.stkTime.addEventHandler(MouseEvent.MOUSE_ENTERED, this::hover);
         this.stkTime.addEventHandler(MouseEvent.MOUSE_EXITED, this::hover);
+        this.stkTime.setOnContextMenuRequested(e -> contextMenu.show(this.stkTime, e.getScreenX(), e.getScreenY()));
     }
 
     public Node getIssueNode()
@@ -88,6 +97,11 @@ public class IssueElement
     public List<Node> getNodes()
     {
         return Arrays.asList(this.stkIssue, this.stkTime);
+    }
+
+    public MenuItem getRemoveMenuItem()
+    {
+        return this.mnuRemove;
     }
 
     private void hover(final MouseEvent event)

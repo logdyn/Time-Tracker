@@ -1,5 +1,7 @@
 package com.mattihew.model;
 
+import javafx.event.ActionEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
@@ -61,9 +63,17 @@ public class IssueList
 
     public boolean add(final IssueElement issue)
     {
-        issue.getNodes().forEach(n -> n.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            this.issueSelected(issue);
+        issue.getRemoveMenuItem().addEventHandler(ActionEvent.ACTION, e -> {
+            this.removeIssue(issue);
             e.consume();
+        });
+
+        issue.getNodes().forEach(n -> n.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY))
+            {
+                this.issueSelected(issue);
+                e.consume();
+            }
         }));
         this.issueSelected(issue);
 
@@ -77,6 +87,12 @@ public class IssueList
     public List<IssueElement> getIssues()
     {
         return Collections.unmodifiableList(this.issues);
+    }
+
+    public void removeIssue(final IssueElement issue)
+    {
+        issue.deselect();
+        this.container.getChildren().removeIf(i -> i.equals(issue.getIssueNode()) || i.equals(issue.getTimeNode()));
     }
 
     public void clearSelection()

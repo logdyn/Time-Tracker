@@ -1,0 +1,14 @@
+GridPane StackPane {
+    -fx-background-color: pink;
+    -fx-cursor: hand;
+}
+
+GridPane StackPane.hover {
+    -fx-background-color: lightyellow;
+}
+
+GridPane StackPane.active {
+    -fx-background-color: lightgreen;
+    -fx-cursor: default;
+}
+

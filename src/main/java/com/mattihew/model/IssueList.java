@@ -22,14 +22,16 @@ public class IssueList
 
     public boolean add(final IssueElement issue)
     {
-        issue.getTimeLabel().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+        issue.getNodes().forEach(n -> n.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             this.issueSelected(issue);
             e.consume();
-        });
+        }));
         this.issueSelected(issue);
 
-        this.container.add(new StackPane(issue.getIssueLabel()), 0, rows);
-        this.container.add(new StackPane(issue.getTimeLabel()), 1, rows++);
+        this.container.add(issue.getIssueNode(), 0, rows);
+        this.container.add(issue.getTimeNode(), 1, rows++);
+        issue.getTimeNode().toBack();
+        issue.getIssueNode().toBack();
         return this.issues.add(issue);
     }
 
@@ -52,7 +54,7 @@ public class IssueList
 
     private void issueSelected(final IssueElement issue)
     {
-        this.clearSelection();
+        this.clearSelection(issue);
         issue.select();
     }
 

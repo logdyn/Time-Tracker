@@ -42,7 +42,7 @@ public class Main extends Application
     private void initialize()
     {
         this.issueList = new IssueList(issueContainer);
-
+        this.issueContainer.getStylesheets().add("fxml/main.css");
         this.issueContainer.setOnDragOver(e -> {
             if (e.getDragboard().hasString())
             {

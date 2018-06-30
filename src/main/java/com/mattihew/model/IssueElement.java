@@ -9,7 +9,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class IssueElement
 {
@@ -23,11 +25,19 @@ public class IssueElement
 
     private final String name;
 
+    private final URI url;
+
     private final ScheduledService<String> service;
 
     public IssueElement(final String issue) throws IOException
     {
+        this(issue, null);
+    }
+
+    public IssueElement(final String issue, final URI url) throws IOException
+    {
         this.name = issue;
+        this.url = url;
         this.timeTracker = new TimeTracker();
 
         FXMLLoader.load(ClassLoader.getSystemResource("issue.fxml"), null, null, c -> this);
@@ -41,6 +51,17 @@ public class IssueElement
     {
         this.lblIssue.setText(this.name);
         //this.lblTime.prefWidthProperty().bind(this.root.widthProperty().divide(2));
+    }
+
+    @FXML
+    private void clickLink() throws IOException
+    {
+        if(this.url != null
+                && Desktop.isDesktopSupported()
+                && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
+        {
+            Desktop.getDesktop().browse(this.url);
+        }
     }
 
     public Region getRoot()

@@ -49,6 +49,5 @@ public class Main extends Application
         CreateIssueDialog dialog = new CreateIssueDialog();
         Optional<IssueElement> result = dialog.showAndWait();
         result.ifPresent(i -> this.issueList.add(i));
-
     }
 }

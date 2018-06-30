@@ -19,7 +19,7 @@
    <children>
       <StackPane GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
          <children>
-            <Hyperlink fx:id="lblIssue" style="-fx-border-color: transparent;" text="Issue-101" StackPane.alignment="CENTER">
+            <Hyperlink fx:id="lblIssue" onAction="#clickLink" style="-fx-border-color: transparent;" text="Issue-101" StackPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>

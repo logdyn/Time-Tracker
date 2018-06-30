@@ -10,12 +10,17 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.TransferMode;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class CreateIssueDialog extends Dialog<IssueElement>
 {
     @FXML private TextField txtIssueName;
+
+    @FXML private TextField txtIssueUrl;
 
     public CreateIssueDialog() throws IOException
     {
@@ -43,13 +48,37 @@ public class CreateIssueDialog extends Dialog<IssueElement>
         this.setResultConverter(b -> {
             try
             {
-                return b == ButtonType.OK ? new IssueElement(txtIssueName.getText()) : null;
+                return b == ButtonType.OK ? new IssueElement(txtIssueName.getText(), new URI(txtIssueUrl.getText())) : null;
             }
-            catch (final IOException e)
+            catch (final IOException | URISyntaxException e)
             {
                 e.printStackTrace();
                 return null;
             }
+        });
+    }
+
+    @FXML
+    private void initialize()
+    {
+        this.txtIssueUrl.setOnDragOver(e -> {
+            if (e.getDragboard().hasUrl())
+            {
+                e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            e.consume();
+        });
+        this.txtIssueUrl.setOnDragDropped(e -> {
+            if (e.getDragboard().hasUrl())
+            {
+                this.txtIssueUrl.setText(e.getDragboard().getUrl());
+                e.setDropCompleted(true);
+            }
+            else
+            {
+                e.setDropCompleted(false);
+            }
+            e.consume();
         });
     }
 }

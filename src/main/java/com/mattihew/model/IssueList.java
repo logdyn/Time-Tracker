@@ -1,9 +1,13 @@
 package com.mattihew.model;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,22 +15,63 @@ import java.util.List;
 public class IssueList
 {
     private final List<IssueElement> issues = new ArrayList<>();
-    private final ObservableList<Node> nodes;
+    private final GridPane container;
 
-    public IssueList(final ObservableList<Node> nodes)
+    private int rows = 0;
+
+    public IssueList(final GridPane nodes)
     {
-        this.nodes = nodes;
+        this.container = nodes;
+        this.container.setOnDragOver(e -> {
+            if (e.getDragboard().hasString())
+            {
+                e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            e.consume();
+        });
+        this.container.setOnDragDropped(e -> {
+            try
+            {
+                if (e.getDragboard().hasUrl())
+                {
+                    URI uri = new URI(e.getDragboard().getUrl());
+                    this.add(new IssueElement(
+                            uri.getPath().substring(uri.getPath().lastIndexOf('/')+1),
+                            uri));
+                    e.setDropCompleted(true);
+                }
+                else if (e.getDragboard().hasString())
+                {
+                    this.add(new IssueElement(e.getDragboard().getString()));
+                    e.setDropCompleted(true);
+                }
+                else
+                {
+                    e.setDropCompleted(false);
+                }
+            }
+            catch (final IOException | URISyntaxException ex)
+            {
+                ex.printStackTrace();
+            }
+
+            e.consume();
+        });
     }
 
     public boolean add(final IssueElement issue)
     {
-        issue.getRoot().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+        issue.getNodes().forEach(n -> n.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             this.issueSelected(issue);
             e.consume();
-        });
+        }));
         this.issueSelected(issue);
-        return this.nodes.add(issue.getRoot())
-        && this.issues.add(issue);
+
+        this.container.add(issue.getIssueNode(), 0, rows);
+        this.container.add(issue.getTimeNode(), 1, rows++);
+        issue.getTimeNode().toBack();
+        issue.getIssueNode().toBack();
+        return this.issues.add(issue);
     }
 
     public List<IssueElement> getIssues()
@@ -48,7 +93,7 @@ public class IssueList
 
     private void issueSelected(final IssueElement issue)
     {
-        clearSelection();
+        this.clearSelection(issue);
         issue.select();
     }
 
@@ -56,6 +101,7 @@ public class IssueList
     {
         this.clearSelection();
         this.issues.clear();
-        this.nodes.clear();
+        this.container.getChildren().removeIf(n -> n instanceof StackPane);
+        this.rows = 0;
     }
 }

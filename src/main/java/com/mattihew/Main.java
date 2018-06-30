@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 public class Main extends Application
@@ -50,7 +52,15 @@ public class Main extends Application
         this.issueContainer.setOnDragDropped(e -> {
             try
             {
-                if (e.getDragboard().hasString())
+                if (e.getDragboard().hasUrl())
+                {
+                    URI uri = new URI(e.getDragboard().getUrl());
+                    this.issueList.add(new IssueElement(
+                            uri.getPath().substring(uri.getPath().lastIndexOf('/')+1),
+                            uri));
+                    e.setDropCompleted(true);
+                }
+                else if (e.getDragboard().hasString())
                 {
                     this.issueList.add(new IssueElement(e.getDragboard().getString()));
                     e.setDropCompleted(true);
@@ -60,7 +70,7 @@ public class Main extends Application
                     e.setDropCompleted(false);
                 }
             }
-            catch (final IOException ex)
+            catch (final IOException | URISyntaxException ex)
             {
                 ex.printStackTrace();
             }

@@ -2,6 +2,7 @@ package com.mattihew.model;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,8 +13,6 @@ public class IssueList
     private final List<IssueElement> issues = new ArrayList<>();
     private final ObservableList<Node> nodes;
 
-    private int selectedIndex = -1;
-
     public IssueList(final ObservableList<Node> nodes)
     {
         this.nodes = nodes;
@@ -21,6 +20,7 @@ public class IssueList
 
     public boolean add(final IssueElement issue)
     {
+        issue.getRoot().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> this.issueSelected(issue));
         return this.nodes.add(issue.getRoot())
         && this.issues.add(issue);
     }
@@ -32,10 +32,19 @@ public class IssueList
 
     public void clearSelection()
     {
-        selectedIndex = -1;
-        for (final IssueElement issue : this.issues)
-        {
-            issue.deselect();
-        }
+        this.clearSelection(null);
+    }
+
+    private void clearSelection(final IssueElement except)
+    {
+        this.issues.stream()
+                .filter(i -> !i.equals(except))
+                .forEach(IssueElement::deselect);
+    }
+
+    private void issueSelected(final IssueElement issue)
+    {
+        clearSelection();
+        issue.select();
     }
 }

@@ -41,7 +41,7 @@ public class IssueElement
     private void initialize()
     {
         this.lblIssue.setText(this.name);
-        this.lblIssue.prefWidthProperty().bind(this.root.widthProperty().divide(2));
+        //this.lblTime.prefWidthProperty().bind(this.root.widthProperty().divide(2));
     }
 
     public Region getRoot()
@@ -61,11 +61,5 @@ public class IssueElement
         this.root.getStyleClass().remove("active");
         this.timeTracker.stopTimer();
         this.service.cancel();
-    }
-
-    @FXML
-    public void click(final MouseEvent event)
-    {
-        this.select();
     }
 }

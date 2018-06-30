@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" gridLinesVisible="true" minHeight="25.0" minWidth="-Infinity" onMouseClicked="#click" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mattihew.model.IssueElement">
+<GridPane fx:id="root" gridLinesVisible="true" minHeight="25.0" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mattihew.model.IssueElement">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,7 +28,7 @@
       </StackPane>
       <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
          <children>
-            <Label fx:id="lblTime" text="00:00:00" StackPane.alignment="CENTER">
+            <Label fx:id="lblTime" text="00h 00m 00s" StackPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>

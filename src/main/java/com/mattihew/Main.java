@@ -9,7 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class Main extends Application
 {
-    @FXML private VBox issueContainer;
+    @FXML private GridPane issueContainer;
 
     private IssueList issueList;
 
@@ -41,7 +41,8 @@ public class Main extends Application
     @FXML
     private void initialize()
     {
-        this.issueList = new IssueList(issueContainer.getChildren());
+        this.issueList = new IssueList(issueContainer);
+
         this.issueContainer.setOnDragOver(e -> {
             if (e.getDragboard().hasString())
             {

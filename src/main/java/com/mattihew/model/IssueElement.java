@@ -56,7 +56,7 @@ public class IssueElement
     @FXML
     private void clickLink() throws IOException
     {
-        if(this.url != null
+        if(!this.url.toString().isEmpty()
                 && Desktop.isDesktopSupported()
                 && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
         {

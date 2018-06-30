@@ -8,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -49,5 +47,11 @@ public class Main extends Application
         CreateIssueDialog dialog = new CreateIssueDialog();
         Optional<IssueElement> result = dialog.showAndWait();
         result.ifPresent(i -> this.issueList.add(i));
+    }
+
+    @FXML
+    private void stopTracking()
+    {
+        issueList.clearSelection();
     }
 }

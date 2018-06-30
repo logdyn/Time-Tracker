@@ -8,8 +8,8 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -28,17 +28,28 @@
                  <menus>
                      <Menu mnemonicParsing="false" text="File">
                          <items>
+                             <MenuItem fx:id="mnuAdd" mnemonicParsing="false" onAction="#addNewIssue" text="Add Issue">
+                                 <accelerator>
+                                     <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                 </accelerator>
+                                 <graphic>
+                                     <Label text="➕" textFill="#000001" />
+                                 </graphic>
+                             </MenuItem>
                              <MenuItem mnemonicParsing="false" text="Close" />
                          </items>
                      </Menu>
-                     <Menu mnemonicParsing="false" text="Edit">
-                         <items>
-                             <MenuItem fx:id="BtnUndo" disable="true" mnemonicParsing="false" text="Undo" />
-                             <MenuItem fx:id="BtnRedo" disable="true" mnemonicParsing="false" text="Redo" />
-                             <SeparatorMenuItem mnemonicParsing="false" />
-                             <MenuItem mnemonicParsing="false" text="Add" />
-                             <MenuItem mnemonicParsing="false" text="Delete" />
-                         </items>
+                     <Menu mnemonicParsing="false" text="Control">
+                     <items>
+                         <MenuItem mnemonicParsing="false" onAction="#stopTracking" text="Stop">
+                             <accelerator>
+                                 <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                             </accelerator>
+                             <graphic>
+                                 <Label text="⏹" textFill="#000001" />
+                             </graphic>
+                         </MenuItem>
+                     </items>
                      </Menu>
                      <Menu mnemonicParsing="false" text="Help">
                          <items>
@@ -49,7 +60,8 @@
              </MenuBar>
             <ToolBar>
               <items>
-                <Button fx:id="BtnAdd" mnemonicParsing="false" onAction="#addNewIssue" text="+" />
+                <Button fx:id="BtnAdd" mnemonicParsing="false" onAction="#addNewIssue" text="➕" />
+                  <Button fx:id="btnStop" mnemonicParsing="false" onAction="#stopTracking" text="⏹" />
               </items>
             </ToolBar>
          </children>

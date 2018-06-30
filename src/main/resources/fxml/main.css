@@ -12,3 +12,7 @@ GridPane StackPane.active {
     -fx-cursor: default;
 }
 
+Hyperlink {
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}

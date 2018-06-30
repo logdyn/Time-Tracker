@@ -1,9 +1,13 @@
 package com.mattihew.model;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +22,41 @@ public class IssueList
     public IssueList(final GridPane nodes)
     {
         this.container = nodes;
+        this.container.setOnDragOver(e -> {
+            if (e.getDragboard().hasString())
+            {
+                e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            e.consume();
+        });
+        this.container.setOnDragDropped(e -> {
+            try
+            {
+                if (e.getDragboard().hasUrl())
+                {
+                    URI uri = new URI(e.getDragboard().getUrl());
+                    this.add(new IssueElement(
+                            uri.getPath().substring(uri.getPath().lastIndexOf('/')+1),
+                            uri));
+                    e.setDropCompleted(true);
+                }
+                else if (e.getDragboard().hasString())
+                {
+                    this.add(new IssueElement(e.getDragboard().getString()));
+                    e.setDropCompleted(true);
+                }
+                else
+                {
+                    e.setDropCompleted(false);
+                }
+            }
+            catch (final IOException | URISyntaxException ex)
+            {
+                ex.printStackTrace();
+            }
+
+            e.consume();
+        });
     }
 
     public boolean add(final IssueElement issue)

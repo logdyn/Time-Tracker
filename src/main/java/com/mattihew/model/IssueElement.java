@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class IssueElement
 {
-    private Hyperlink lblIssue;
+    private Labeled lblIssue;
 
     private StackPane stkIssue;
 
@@ -45,8 +46,15 @@ public class IssueElement
         this.name = issue;
         this.url = url;
 
-        this.lblIssue = new Hyperlink(name);
-        this.lblIssue.addEventHandler(MouseEvent.MOUSE_CLICKED, this::clickLink);
+        if (url != null && !url.toString().isEmpty())
+        {
+            this.lblIssue = new Hyperlink(name);
+            this.lblIssue.addEventHandler(MouseEvent.MOUSE_CLICKED, this::clickLink);
+        }
+        else
+        {
+            this.lblIssue = new Label(name);
+        }
         this.lblIssue.setFont(new Font(24));
         this.lblIssue.setAlignment(Pos.CENTER);
 

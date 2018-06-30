@@ -1,5 +1,6 @@
 package com.mattihew;
 
+import com.mattihew.dialogs.CreateIssueDialog;
 import com.mattihew.model.IssueElement;
 import com.mattihew.model.IssueList;
 import javafx.application.Application;
@@ -45,22 +46,9 @@ public class Main extends Application
     @FXML
     private void addNewIssue() throws IOException
     {
-        TextInputDialog dialog = new TextInputDialog("issue name");
-        dialog.setTitle("New Issue name");
-        dialog.setHeaderText(null);
-        dialog.setContentText("Enter issue name:");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(n -> {
-            try
-            {
-                this.issueList.add(new IssueElement(n));
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        });
+        CreateIssueDialog dialog = new CreateIssueDialog();
+        Optional<IssueElement> result = dialog.showAndWait();
+        result.ifPresent(i -> this.issueList.add(i));
 
     }
 }

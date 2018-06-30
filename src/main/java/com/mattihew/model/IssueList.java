@@ -21,6 +21,7 @@ public class IssueList
     public boolean add(final IssueElement issue)
     {
         issue.getRoot().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> this.issueSelected(issue));
+        this.issueSelected(issue);
         return this.nodes.add(issue.getRoot())
         && this.issues.add(issue);
     }

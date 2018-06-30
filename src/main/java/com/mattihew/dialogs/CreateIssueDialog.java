@@ -28,7 +28,7 @@ public class CreateIssueDialog extends Dialog<IssueElement>
         this.setHeaderText("Add a new Issue");
 
         final Parent parent = FXMLLoader.load(
-                ClassLoader.getSystemResource("dialogs/createIssueDialog.fxml"),
+                ClassLoader.getSystemResource("fxml/dialogs/createIssueDialog.fxml"),
                 null,
                 null,
                 c -> this);

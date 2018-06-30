@@ -48,4 +48,11 @@ public class IssueList
         clearSelection();
         issue.select();
     }
+
+    public void clearIssues()
+    {
+        this.clearSelection();
+        this.issues.clear();
+        this.nodes.clear();
+    }
 }

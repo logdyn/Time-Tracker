@@ -40,8 +40,8 @@ public class IssueElement
         this.url = url;
         this.timeTracker = new TimeTracker();
 
-        FXMLLoader.load(ClassLoader.getSystemResource("issue.fxml"), null, null, c -> this);
-        this.root.getStylesheets().add("issue.css");
+        FXMLLoader.load(ClassLoader.getSystemResource("fxml/issue.fxml"), null, null, c -> this);
+        this.root.getStylesheets().add("fxml/issue.css");
         this.service = new TimerService(this.timeTracker);
         this.lblTime.textProperty().bind(new NonNullObservableValue<>(service.lastValueProperty(),"0h 0m 0s"));
     }
@@ -50,13 +50,13 @@ public class IssueElement
     private void initialize()
     {
         this.lblIssue.setText(this.name);
-        //this.lblTime.prefWidthProperty().bind(this.root.widthProperty().divide(2));
     }
 
     @FXML
     private void clickLink() throws IOException
     {
-        if(!this.url.toString().isEmpty()
+        if(this.url != null
+                && !this.url.toString().isEmpty()
                 && Desktop.isDesktopSupported()
                 && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
         {

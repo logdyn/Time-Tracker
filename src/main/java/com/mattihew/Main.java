@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -28,7 +29,7 @@ public class Main extends Application
     @Override
     public void start(final Stage primaryStage) throws IOException
     {
-        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("main.fxml"));
+        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("fxml/main.fxml"));
         final Scene scene = new Scene(root, 300, -1);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Time Tracker");
@@ -36,9 +37,36 @@ public class Main extends Application
     }
 
     @FXML
-    private void initialize() throws IOException
+    private void initialize()
     {
         this.issueList = new IssueList(issueContainer.getChildren());
+        this.issueContainer.setOnDragOver(e -> {
+            if (e.getDragboard().hasString())
+            {
+                e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            e.consume();
+        });
+        this.issueContainer.setOnDragDropped(e -> {
+            try
+            {
+                if (e.getDragboard().hasString())
+                {
+                    this.issueList.add(new IssueElement(e.getDragboard().getString()));
+                    e.setDropCompleted(true);
+                }
+                else
+                {
+                    e.setDropCompleted(false);
+                }
+            }
+            catch (final IOException ex)
+            {
+                ex.printStackTrace();
+            }
+
+            e.consume();
+        });
     }
 
     @FXML
@@ -52,6 +80,12 @@ public class Main extends Application
     @FXML
     private void stopTracking()
     {
-        issueList.clearSelection();
+        this.issueList.clearSelection();
+    }
+
+    @FXML
+    private void clearIssues()
+    {
+        this.issueList.clearIssues();
     }
 }

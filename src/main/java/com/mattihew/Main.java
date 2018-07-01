@@ -4,12 +4,16 @@ import com.mattihew.dialogs.CreateIssueDialog;
 import com.mattihew.model.IssueElement;
 import com.mattihew.model.IssueList;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -34,6 +38,25 @@ public class Main extends Application
         primaryStage.setScene(scene);
         primaryStage.setTitle("Time Tracker");
         primaryStage.show();
+
+        final ScheduledService<Void> reminder = new ScheduledService<Void>()
+        {
+            @Override
+            protected Task<Void> createTask()
+            {
+                return new Task<Void>()
+                {
+                    @Override
+                    protected Void call()
+                    {
+                        Platform.runLater(primaryStage::toFront);
+                        return null;
+                    }
+                };
+            }
+        };
+        reminder.setPeriod(Duration.minutes(30));
+        reminder.start();
     }
 
     @FXML

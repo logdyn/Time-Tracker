@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -38,6 +39,7 @@ public class Main extends Application
         primaryStage.setScene(scene);
         primaryStage.setTitle("Time Tracker");
         primaryStage.show();
+        primaryStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("images/Stopwatch-filled.png")));
 
         final ScheduledService<Void> reminder = new ScheduledService<Void>()
         {
@@ -63,7 +65,6 @@ public class Main extends Application
     private void initialize()
     {
         this.issueList = new IssueList(issueContainer);
-
     }
 
     @FXML
@@ -71,7 +72,7 @@ public class Main extends Application
     {
         CreateIssueDialog dialog = new CreateIssueDialog();
         Optional<IssueElement> result = dialog.showAndWait();
-        result.ifPresent(i -> this.issueList.add(i));
+        result.ifPresent(this.issueList::add);
     }
 
     @FXML

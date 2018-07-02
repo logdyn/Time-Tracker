@@ -33,7 +33,7 @@ public class Main extends Application
     @Override
     public void start(final Stage primaryStage) throws IOException
     {
-        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("fxml/main.fxml"));
+        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("fxml/main.fxml"), null, null, c -> this);
         root.getStylesheets().add("fxml/main.css");
         final Scene scene = new Scene(root, 300, -1);
         primaryStage.setScene(scene);
@@ -51,13 +51,17 @@ public class Main extends Application
                     @Override
                     protected Void call()
                     {
-                        Platform.runLater(primaryStage::toFront);
+                        Platform.runLater(() -> {
+                            primaryStage.toFront();
+                            //issueList.clearSelection();
+                        });
                         return null;
                     }
                 };
             }
         };
-        reminder.setPeriod(Duration.minutes(30));
+        reminder.setOnFailed(e ->e.getSource().getException().printStackTrace());
+        reminder.setPeriod(Duration.minutes(0.1));
         reminder.start();
     }
 

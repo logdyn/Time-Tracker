@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?><?import javafx.scene.layout.*?>
+<DialogPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.mattihew.dialogs.WorkLogDialog">
+    <content>
+        <GridPane hgap="10.0" vgap="10.0">
+            <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
+            <children>
+                <Label text="Duration:" />
+                <TextField fx:id="txtDuration" editable="false" GridPane.columnIndex="1" />
+                <Label text="Start time:" GridPane.rowIndex="1" />
+                <TextField fx:id="txtStartTime" editable="false" minWidth="175.0" GridPane.columnIndex="1"
+                    GridPane.rowIndex="1" />
+            </children>
+        </GridPane>
+    </content>
+    <buttonTypes>
+        <ButtonType fx:constant="CLOSE" />
+    </buttonTypes>
+</DialogPane>

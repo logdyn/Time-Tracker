@@ -65,4 +65,14 @@ public class TimeTracker
         }
         return result;
     }
+
+    public void subtractMillis(final long millis)
+    {
+        this.currentStartTime += millis;
+    }
+
+    public void addMillis(final long millis)
+    {
+        this.currentStartTime -= millis;
+    }
 }

@@ -1,5 +1,6 @@
 package com.mattihew.model;
 
+import com.mattihew.dialogs.WorkLogDialog;
 import com.mattihew.utils.NonNullObservableValue;
 import com.mattihew.utils.TimerService;
 import javafx.concurrent.ScheduledService;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class IssueElement
 {
@@ -50,8 +52,38 @@ public class IssueElement
         this.name = issue;
         this.url = url;
 
+        this.timeTracker = new TimeTracker();
+        this.service = new TimerService(this.timeTracker);
+
+        final MenuItem showWorkLog = new MenuItem("Show work-log");
+
+        final MenuItem addMillis = new MenuItem("Add Milliseconds");
         this.mnuRemove = new MenuItem("Remove", new Label("🗑"));
-        final ContextMenu contextMenu = new ContextMenu(this.mnuRemove);
+        final ContextMenu contextMenu = new ContextMenu(showWorkLog, new SeparatorMenuItem(), addMillis, this.mnuRemove);
+
+        showWorkLog.setOnAction(e -> {
+            try
+            {
+                WorkLogDialog workLogDialog = new WorkLogDialog(
+                        this.name,
+                        new WorkLog(
+                                this.timeTracker.getFirstStartTime(),
+                                this.timeTracker.getDuration(),
+                                ""));
+                workLogDialog.show();
+            }
+            catch (IOException e1)
+            {
+                e1.printStackTrace();
+            }
+        });
+
+        addMillis.setOnAction(e -> {
+            final TextInputDialog dialog = new TextInputDialog();
+            dialog.setHeaderText("please only enter a number.");
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(v -> this.timeTracker.addMillis(Long.parseLong(v)));
+        });
 
         if (url != null && !url.toString().isEmpty())
         {
@@ -69,9 +101,6 @@ public class IssueElement
         this.stkIssue.addEventHandler(MouseEvent.MOUSE_ENTERED, this::hover);
         this.stkIssue.addEventHandler(MouseEvent.MOUSE_EXITED, this::hover);
         this.stkIssue.setOnContextMenuRequested(e -> contextMenu.show(this.stkIssue, e.getScreenX(), e.getScreenY()));
-
-        this.timeTracker = new TimeTracker();
-        this.service = new TimerService(this.timeTracker);
 
         this.lblTime = new Label();
         this.lblTime.textProperty().bind(new NonNullObservableValue<>(service.lastValueProperty(),"0h 0m 0s"));

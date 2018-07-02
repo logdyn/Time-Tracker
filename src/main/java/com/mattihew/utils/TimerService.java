@@ -58,5 +58,10 @@ public class TimerService extends ScheduledService<String>
             format = Format.DAYS;
             this.setPeriod(Duration.minutes(1));
         }
+        else if(this.format == Format.DAYS && this.timeTracker.getDuration() < DateUtils.MILLIS_PER_DAY)
+        {
+            format = Format.SECS;
+            this.setPeriod(Duration.seconds(1));
+        }
     }
 }

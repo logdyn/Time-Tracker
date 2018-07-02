@@ -61,7 +61,7 @@ public class Main extends Application
             }
         };
         reminder.setOnFailed(e ->e.getSource().getException().printStackTrace());
-        reminder.setPeriod(Duration.minutes(0.1));
+        reminder.setPeriod(Duration.minutes(30));
         reminder.start();
     }
 

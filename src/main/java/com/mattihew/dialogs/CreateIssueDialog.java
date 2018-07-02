@@ -15,6 +15,7 @@ import javafx.scene.input.TransferMode;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 public class CreateIssueDialog extends Dialog<IssueElement>
 {
@@ -34,8 +35,11 @@ public class CreateIssueDialog extends Dialog<IssueElement>
                 c -> this);
         this.getDialogPane().setContent(parent);
 
-        this.setGraphic(new ImageView(
-                this.getClass().getResource("/com/sun/javafx/scene/control/skin/modena/dialog-confirm.png").toString()));
+        final URL imageURL = this.getClass().getResource("/com/sun/javafx/scene/control/skin/modena/dialog-confirm.png");
+        if (imageURL != null)
+        {
+            this.setGraphic(new ImageView(imageURL.toString()));
+        }
 
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 

@@ -10,6 +10,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -46,7 +47,7 @@
                                 </MenuItem>
                                 <MenuItem mnemonicParsing="false" onAction="#clearIssues" text="Clear Issues">
                                     <graphic>
-                                        <Label text="🗑" textFill="#000000" />
+                                        <Label text="×" textFill="#000000" />
                                     </graphic>
                                 </MenuItem>
                                 <SeparatorMenuItem mnemonicParsing="false" />
@@ -60,7 +61,7 @@
                                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                     <graphic>
-                                        <Label text="⏹" textFill="#000000" />
+                                        <Label text="■" textFill="#000000" />
                                     </graphic>
                                 </MenuItem>
                             </items>
@@ -74,9 +75,21 @@
                 </MenuBar>
                 <ToolBar>
                     <items>
-                        <Button fx:id="BtnAdd" mnemonicParsing="false" onAction="#addNewIssue" text="➕" />
-                        <Button fx:id="btnStop" mnemonicParsing="false" onAction="#stopTracking" text="⏹" />
-                        <Button mnemonicParsing="false" onAction="#clearIssues" text="🗑" />
+                        <Button mnemonicParsing="false" onAction="#addNewIssue" text="➕">
+                            <tooltip>
+                                <Tooltip text="Add Issue" />
+                            </tooltip>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#stopTracking" text="■">
+                            <tooltip>
+                                <Tooltip text="Stop" />
+                            </tooltip>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#clearIssues" text="×">
+                            <tooltip>
+                                <Tooltip text="Clear" />
+                            </tooltip>
+                        </Button>
                     </items>
                 </ToolBar>
             </children>

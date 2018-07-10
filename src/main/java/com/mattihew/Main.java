@@ -4,6 +4,7 @@ import com.mattihew.dialogs.CreateIssueDialog;
 import com.mattihew.dialogs.ExceptionAlert;
 import com.mattihew.model.IssueElement;
 import com.mattihew.model.IssueList;
+import com.mattihew.utils.IconController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
@@ -12,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -42,7 +42,7 @@ public class Main extends Application
         primaryStage.setScene(scene);
         primaryStage.setTitle("Time Tracker");
         primaryStage.show();
-        primaryStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("images/Stopwatch-filled.png")));
+        IconController.setIcon(primaryStage, "white");
 
         final ScheduledService<Void> reminder = new ScheduledService<Void>()
         {

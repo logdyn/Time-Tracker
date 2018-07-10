@@ -58,7 +58,7 @@ public class IssueElement
         final MenuItem showWorkLog = new MenuItem("Show work-log");
 
         final MenuItem addMillis = new MenuItem("Add Milliseconds");
-        this.mnuRemove = new MenuItem("Remove", new Label("🗑"));
+        this.mnuRemove = new MenuItem("Remove", new Label("×"));
         final ContextMenu contextMenu = new ContextMenu(showWorkLog, new SeparatorMenuItem(), addMillis, this.mnuRemove);
 
         showWorkLog.setOnAction(e -> {

@@ -1,11 +1,13 @@
 package com.mattihew.model;
 
+import com.mattihew.utils.IconController;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URI;
@@ -98,6 +100,7 @@ public class IssueList
     public void clearSelection()
     {
         this.clearSelection(null);
+        IconController.setIcon((Stage) this.container.getScene().getWindow(), "red");
     }
 
     private void clearSelection(final IssueElement except)
@@ -111,6 +114,7 @@ public class IssueList
     {
         this.clearSelection(issue);
         issue.select();
+        IconController.setIcon((Stage) this.container.getScene().getWindow(), "green");
     }
 
     public void clearIssues()

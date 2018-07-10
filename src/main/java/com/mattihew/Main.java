@@ -1,6 +1,7 @@
 package com.mattihew;
 
 import com.mattihew.dialogs.CreateIssueDialog;
+import com.mattihew.dialogs.ExceptionAlert;
 import com.mattihew.model.IssueElement;
 import com.mattihew.model.IssueList;
 import javafx.application.Application;
@@ -33,6 +34,8 @@ public class Main extends Application
     @Override
     public void start(final Stage primaryStage) throws IOException
     {
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> new ExceptionAlert(e).show());
+
         final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("fxml/main.fxml"), null, null, c -> this);
         root.getStylesheets().add("fxml/main.css");
         final Scene scene = new Scene(root, 300, -1);
@@ -62,7 +65,7 @@ public class Main extends Application
         };
         reminder.setOnFailed(e ->e.getSource().getException().printStackTrace());
         reminder.setPeriod(Duration.minutes(30));
-        reminder.start();
+        //reminder.start();
     }
 
     @FXML

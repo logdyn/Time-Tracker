@@ -12,6 +12,10 @@
     -fx-cursor: default;
 }
 
+.menu-item .label {
+    -fx-text-fill: #000000;
+}
+
 Hyperlink {
     -fx-border-color: transparent;
     -fx-padding: 0;

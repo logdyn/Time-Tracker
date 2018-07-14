@@ -39,14 +39,14 @@ public class IssueList
                 if (e.getDragboard().hasUrl())
                 {
                     URI uri = new URI(e.getDragboard().getUrl());
-                    this.add(new IssueElement(
+                    this.add(new IssueElement(new Issue(
                             uri.getPath().substring(uri.getPath().lastIndexOf('/')+1),
-                            uri));
+                            uri)));
                     e.setDropCompleted(true);
                 }
                 else if (e.getDragboard().hasString())
                 {
-                    this.add(new IssueElement(e.getDragboard().getString()));
+                    this.add(new IssueElement(new Issue(e.getDragboard().getString())));
                     e.setDropCompleted(true);
                 }
                 else

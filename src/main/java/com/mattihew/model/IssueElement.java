@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -34,26 +35,15 @@ public class IssueElement
     private final MenuItem mnuRemove;
 
     //Other fields
-    private final TimeTracker timeTracker;
-
-    private final String name;
-
-    private final URI url;
+    private final Issue issue;
 
     private final ScheduledService<String> service;
 
-    public IssueElement(final String issue) throws IOException
+    public IssueElement(final Issue issue) throws IOException
     {
-        this(issue, null);
-    }
+        this.issue = issue;
 
-    public IssueElement(final String issue, final URI url) throws IOException
-    {
-        this.name = issue;
-        this.url = url;
-
-        this.timeTracker = new TimeTracker();
-        this.service = new TimerService(this.timeTracker);
+        this.service = new TimerService(this.issue.getTimeTracker());
 
         final MenuItem showWorkLog = new MenuItem("Show work-log");
 
@@ -65,10 +55,10 @@ public class IssueElement
             try
             {
                 WorkLogDialog workLogDialog = new WorkLogDialog(
-                        this.name,
+                        this.issue.getName(),
                         new WorkLog(
-                                this.timeTracker.getFirstStartTime(),
-                                this.timeTracker.getDuration(),
+                                this.issue.getTimeTracker().getFirstStartTime(),
+                                this.issue.getTimeTracker().getDuration(),
                                 ""));
                 workLogDialog.show();
             }
@@ -82,17 +72,17 @@ public class IssueElement
             final TextInputDialog dialog = new TextInputDialog();
             dialog.setHeaderText("please only enter a number.");
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(v -> this.timeTracker.addMillis(Long.parseLong(v)));
+            result.ifPresent(v -> this.issue.getTimeTracker().addMillis(Long.parseLong(v)));
         });
 
-        if (url != null && !url.toString().isEmpty())
+        if (this.issue.getUrl() != null && !this.issue.getUrl().toString().isEmpty())
         {
-            this.lblIssue = new Hyperlink(name);
+            this.lblIssue = new Hyperlink(this.issue.getName());
             this.lblIssue.addEventHandler(MouseEvent.MOUSE_CLICKED, this::clickLink);
         }
         else
         {
-            this.lblIssue = new Label(name);
+            this.lblIssue = new Label(this.issue.getName());
         }
         this.lblIssue.setFont(new Font(24));
         this.lblIssue.setAlignment(Pos.CENTER);
@@ -155,14 +145,15 @@ public class IssueElement
 
     private void clickLink(final MouseEvent event)
     {
-        if(this.url != null
-                && !this.url.toString().isEmpty()
+        if(event.getButton().equals(MouseButton.PRIMARY)
+                && this.issue.getUrl() != null
+                && !this.issue.getUrl().toString().isEmpty()
                 && Desktop.isDesktopSupported()
                 && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
         {
             try
             {
-                Desktop.getDesktop().browse(this.url);
+                Desktop.getDesktop().browse(this.issue.getUrl());
                 event.consume();
             }
             catch (final IOException e)
@@ -175,14 +166,14 @@ public class IssueElement
     public void select()
     {
         this.getNodes().forEach(n -> this.setStyleClass(n, "active", true));
-        this.timeTracker.startTimer();
+        this.issue.getTimeTracker().startTimer();
         this.service.restart();
     }
 
     public void deselect()
     {
         this.getNodes().forEach(n -> this.setStyleClass(n, "active", false));
-        this.timeTracker.stopTimer();
+        this.issue.getTimeTracker().stopTimer();
         this.service.cancel();
     }
 }

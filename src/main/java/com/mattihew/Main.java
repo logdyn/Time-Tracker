@@ -4,6 +4,7 @@ import com.mattihew.dialogs.CreateIssueDialog;
 import com.mattihew.dialogs.ExceptionAlert;
 import com.mattihew.model.IssueElement;
 import com.mattihew.model.IssueList;
+import com.mattihew.servers.ServerController;
 import com.mattihew.utils.IconController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -24,7 +26,11 @@ public class Main extends Application
 {
     @FXML private GridPane issueContainer;
 
+    @FXML private Menu mnuServer;
+
     private IssueList issueList;
+
+    private ServerController serverController;
 
     public static void main(final String[] args)
     {
@@ -72,6 +78,7 @@ public class Main extends Application
     private void initialize()
     {
         this.issueList = new IssueList(issueContainer);
+        this.serverController = new ServerController(mnuServer);
     }
 
     @FXML

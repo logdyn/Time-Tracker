@@ -1,5 +1,6 @@
 package com.mattihew.dialogs;
 
+import com.mattihew.model.Issue;
 import com.mattihew.model.IssueElement;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -52,7 +53,7 @@ public class CreateIssueDialog extends Dialog<IssueElement>
         this.setResultConverter(b -> {
             try
             {
-                return b == ButtonType.OK ? new IssueElement(txtIssueName.getText(), new URI(txtIssueUrl.getText())) : null;
+                return b == ButtonType.OK ? new IssueElement(new Issue(txtIssueName.getText(), new URI(txtIssueUrl.getText()))) : null;
             }
             catch (final IOException | URISyntaxException e)
             {

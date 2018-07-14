@@ -42,12 +42,12 @@
                                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                     <graphic>
-                                        <Label text="➕" textFill="#000000" />
+                                        <Label text="➕" />
                                     </graphic>
                                 </MenuItem>
                                 <MenuItem mnemonicParsing="false" onAction="#clearIssues" text="Clear Issues">
                                     <graphic>
-                                        <Label text="×" textFill="#000000" />
+                                        <Label text="×"/>
                                     </graphic>
                                 </MenuItem>
                                 <SeparatorMenuItem mnemonicParsing="false" />
@@ -61,11 +61,12 @@
                                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                     <graphic>
-                                        <Label text="■" textFill="#000000" />
+                                        <Label text="■" />
                                     </graphic>
                                 </MenuItem>
                             </items>
                         </Menu>
+                        <Menu fx:id="mnuServer" mnemonicParsing="false" text="Servers" />
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="About" />

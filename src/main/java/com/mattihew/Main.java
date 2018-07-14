@@ -40,7 +40,10 @@ public class Main extends Application
     @Override
     public void start(final Stage primaryStage) throws IOException
     {
-        Thread.setDefaultUncaughtExceptionHandler((t, e) -> new ExceptionAlert(e).show());
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            new ExceptionAlert(e).show();
+            e.printStackTrace();
+        });
 
         final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("fxml/main.fxml"), null, null, c -> this);
         root.getStylesheets().add("fxml/main.css");

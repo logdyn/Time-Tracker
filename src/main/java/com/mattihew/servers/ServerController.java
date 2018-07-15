@@ -1,6 +1,8 @@
 package com.mattihew.servers;
 
 import com.mattihew.dialogs.ServerDialog;
+import com.mattihew.model.IssueElement;
+import com.mattihew.model.IssueList;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -16,11 +18,14 @@ public class ServerController
 {
     private Menu mnuServer;
 
-    private List<JiraServer> servers = new ArrayList<>();
+    private IssueList issueList;
 
-    public ServerController(final Menu mnuServer)
+    private List<Server> servers = new ArrayList<>();
+
+    public ServerController(final Menu mnuServer, final IssueList issueList)
     {
         this.mnuServer = mnuServer;
+        this.issueList = issueList;
 
         final MenuItem addServer = new MenuItem("Add", new Label("➕"));
         this.mnuServer.getItems().add(addServer);
@@ -31,7 +36,7 @@ public class ServerController
     {
         try
         {
-            final Optional<JiraServer> newServer = new ServerDialog().showAndWait();
+            final Optional<Server> newServer = new ServerDialog().showAndWait();
             newServer.ifPresent(jiraServer -> {
                 if (servers.isEmpty())
                 {
@@ -39,15 +44,29 @@ public class ServerController
                 }
                 servers.add(jiraServer);
 
+                final MenuItem edit = new MenuItem("Edit");
                 final MenuItem remove = new MenuItem("Remove");
                 final Menu menu = new Menu(jiraServer.getName());
                 menu.setOnShowing(event -> {
                     menu.getItems().clear();
-                    menu.getItems().addAll(remove, new SeparatorMenuItem());
-                    menu.getItems().addAll(jiraServer.getIssues().stream().map(issue -> new MenuItem(issue.getName())).collect(Collectors.toList()));
+                    menu.getItems().addAll(edit, remove, new SeparatorMenuItem());
+                    menu.getItems().addAll(jiraServer.getIssues().stream().map(issue -> {
+                        final MenuItem item = new MenuItem(issue.getName());
+                        item.setOnAction(e -> {
+                            try
+                            {
+                                issueList.add(new IssueElement(issue));
+                            }
+                            catch (IOException e1)
+                            {
+                                e1.printStackTrace();
+                            }
+                        });
+                        return item;
+                    }).collect(Collectors.toList()));
                 });
 
-                menu.getItems().addAll(remove, new SeparatorMenuItem());
+                menu.getItems().addAll(edit, remove, new SeparatorMenuItem());
                 this.mnuServer.getItems().add(menu);
             });
         }

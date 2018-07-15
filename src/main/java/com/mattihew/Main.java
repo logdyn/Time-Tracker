@@ -81,7 +81,7 @@ public class Main extends Application
     private void initialize()
     {
         this.issueList = new IssueList(issueContainer);
-        this.serverController = new ServerController(mnuServer);
+        this.serverController = new ServerController(mnuServer, this.issueList);
     }
 
     @FXML

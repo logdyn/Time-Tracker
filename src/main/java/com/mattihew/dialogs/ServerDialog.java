@@ -1,6 +1,7 @@
 package com.mattihew.dialogs;
 
 import com.mattihew.servers.JiraServer;
+import com.mattihew.servers.Server;
 import com.mattihew.servers.ServerFactory;
 import com.mattihew.utils.IconController;
 import javafx.application.Platform;
@@ -20,7 +21,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
-public class ServerDialog extends Dialog<JiraServer>
+public class ServerDialog extends Dialog<Server>
 {
     @FXML
     private TextField txtName;

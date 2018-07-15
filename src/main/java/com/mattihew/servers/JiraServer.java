@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class JiraServer
+public class JiraServer implements Server
 {
     private final String url;
 
@@ -35,6 +35,7 @@ public class JiraServer
         return this.url;
     }
 
+    @Override
     public String getName()
     {
         return this.name;
@@ -50,6 +51,7 @@ public class JiraServer
         return this.issueJQL;
     }
 
+    @Override
     public List<Issue> getIssues()
     {
         try
@@ -62,7 +64,7 @@ public class JiraServer
                 final JSONObject json = new JSONObject(new JSONTokener(stream));
                 return json.getJSONArray("issues").toList().stream()
                         .map(i -> {
-                            final String key = ((Map<String, Object>) i).get("key").toString();
+                            final String key = ((Map) i).get("key").toString();
                             return new Issue(key, URI.create(this.url + "/browse/" + key));
                         }).collect(Collectors.toList());
             }

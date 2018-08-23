@@ -1,30 +1,40 @@
 package com.mattihew.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class WorkLog
 {
-    private long startTime;
-    private long duration;
-    private String comment;
+    private TimeTracker timeTracker;
+    private StringProperty comment;
+
+    public WorkLog()
+    {
+        this(-1, 0, "");
+    }
 
     public WorkLog(final long startTime, final long duration, final String comment)
     {
-        this.startTime = startTime;
-        this.duration = duration;
-        this.comment = comment;
+        this.timeTracker = new TimeTracker(startTime, duration);
+        this.comment = new SimpleStringProperty(this, "comment", comment); //NON-NLS
+    }
+
+    public TimeTracker getTimeTracker()
+    {
+        return this.timeTracker;
     }
 
     public long getStartTime()
     {
-        return startTime;
+        return this.timeTracker.getFirstStartTime();
     }
 
     public long getDuration()
     {
-        return duration;
+        return this.timeTracker.getDuration();
     }
 
-    public String getComment()
-    {
-        return comment;
-    }
+    public StringProperty commentProperty() { return this.comment; }
+    public String getComment() { return this.comment.get(); }
+    public void setComment(final String comment) { this.comment.set(comment); }
 }
